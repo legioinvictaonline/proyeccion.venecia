@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--
+  Proyección de Ventas — Panadería San Cosme (Venecia / Altamirano)
+  Qué es: página web de presentación de la proyección de ventas mensual (modelo JCF).
+  Quién: Lumi (para el Demiurgo · Legio Invicta / Demiurgo Design).
+  Cuándo: 202608172100
+  Por qué: presentar de forma bonita e impresible la proyección de JCF para compartir por link.
+  Cómo se usa: abrir index.html. Gate de contraseña client-side (ver const PASS abajo).
+               Publicado en GitHub Pages. noindex + robots para evitar indexación.
+  Nota: la contraseña NO protege el contenido de verdad (es client-side); solo disuade.
+  Cambios:
+    - 202608172100 Lumi — versión inicial v1 con modelo JCF.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Proyección de Ventas — San Cosme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f6f0e2;
+  --paper:#fbf7ec;
+  --ink:#2b2320;
+  --burgundy:#6e2b2b;
+  --burgundy-dark:#4d1d1d;
+  --gold:#b08d46;
+  --gold-soft:#c9a865;
+  --line:#d8c9a8;
+  --muted:#7a6a58;
+  --green:#3f5d3a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--cream);color:var(--ink);font-family:'Josefin Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{line-height:1.5}
+
+/* ---------- GATE ---------- */
+#gate{position:fixed;inset:0;background:var(--burgundy-dark);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:22px;padding:24px}
+#gate .box{background:var(--paper);border:1px solid var(--gold-soft);padding:44px 40px;max-width:380px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+#gate h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:28px;color:var(--burgundy);letter-spacing:.5px;margin-bottom:6px}
+#gate p{font-size:13px;color:var(--muted);margin-bottom:22px;letter-spacing:.5px}
+#gate input{width:100%;padding:12px 14px;border:1px solid var(--line);background:#fff;font-family:'Josefin Sans',sans-serif;font-size:15px;text-align:center;letter-spacing:2px;outline:none}
+#gate input:focus{border-color:var(--gold)}
+#gate button{margin-top:16px;width:100%;padding:12px;background:var(--burgundy);color:#f6f0e2;border:none;font-family:'Josefin Sans',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.2s}
+#gate button:hover{background:var(--burgundy-dark)}
+#gate .err{color:#c85a4a;font-size:12px;min-height:16px;letter-spacing:1px;margin-top:10px}
+#gate .crest{font-family:'Cormorant Garamond',serif;color:var(--gold-soft);font-size:13px;letter-spacing:4px;text-transform:uppercase}
+
+/* ---------- CONTENT ---------- */
+#app{display:none;max-width:920px;margin:0 auto;padding:0 26px 80px}
+
+header.masthead{text-align:center;padding:64px 10px 34px;position:relative}
+.rule-deco{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold);font-size:12px;letter-spacing:6px;text-transform:uppercase;margin-bottom:18px}
+.rule-deco::before,.rule-deco::after{content:"";height:1px;width:60px;background:linear-gradient(90deg,transparent,var(--gold-soft))}
+.rule-deco::after{background:linear-gradient(90deg,var(--gold-soft),transparent)}
+header.masthead h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:52px;line-height:1.05;color:var(--burgundy);letter-spacing:.5px}
+header.masthead .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--muted);margin-top:8px}
+header.masthead .meta{margin-top:20px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}
+
+/* hero totals */
+.hero{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:36px 0 12px;border:1px solid var(--line);background:var(--paper)}
+.hero .cell{padding:28px 18px;text-align:center;border-right:1px solid var(--line)}
+.hero .cell:last-child{border-right:none}
+.hero .cell.total{background:var(--burgundy);color:var(--cream)}
+.hero .k{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.hero .cell.total .k{color:var(--gold-soft)}
+.hero .v{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--burgundy);margin-top:6px}
+.hero .cell.total .v{color:#fff;font-size:36px}
+.hero .u{font-size:11px;letter-spacing:1px;color:var(--muted);margin-top:2px}
+.hero .cell.total .u{color:var(--gold-soft)}
+
+section.unit{margin-top:48px}
+.unit-head{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--burgundy);padding-bottom:8px;margin-bottom:4px}
+.unit-head h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;color:var(--burgundy);letter-spacing:.5px}
+.unit-head .badge{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600}
+
+table{width:100%;border-collapse:collapse;margin-top:6px}
+table th{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-weight:500}
+table th.num,table td.num{text-align:right;font-variant-numeric:tabular-nums}
+table td{padding:11px 10px;border-bottom:1px solid #ece2cc;font-size:15px}
+table td .line{font-weight:500}
+table td .note{display:block;font-size:12px;color:var(--muted);font-style:italic;margin-top:2px}
+tr.sub td{background:#f1e8d3;font-weight:600}
+tr.sub td .line{color:var(--burgundy)}
+tr.grand td{border-top:2px solid var(--burgundy);border-bottom:none;padding-top:14px;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--burgundy)}
+tr.grand td.num{font-size:22px}
+.cat{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--gold);padding:18px 10px 4px}
+
+.narr{background:var(--paper);border-left:3px solid var(--gold-soft);padding:16px 20px;margin-top:18px;font-size:14px;color:var(--ink);line-height:1.6}
+.narr b{color:var(--burgundy)}
+
+footer.foot{text-align:center;margin-top:60px;padding-top:26px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase}
+footer.foot .disc{text-transform:none;letter-spacing:0;font-style:italic;font-size:12px;margin-top:10px;color:var(--muted)}
+.print-btn{position:fixed;bottom:22px;right:22px;background:var(--burgundy);color:var(--cream);border:none;padding:12px 18px;font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:50}
+.print-btn:hover{background:var(--burgundy-dark)}
+
+@media(max-width:640px){
+  header.masthead h1{font-size:38px}
+  .hero{grid-template-columns:1fr;}
+  .hero .cell{border-right:none;border-bottom:1px solid var(--line)}
+  table td{font-size:14px}
+}
+@media print{
+  #gate,.print-btn{display:none!important}
+  #app{display:block!important}
+  body{background:#fff}
+  .hero .cell.total{background:#fff;color:var(--burgundy);-webkit-print-color-adjust:exact}
+  header.masthead{padding-top:20px}
+  section.unit{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="box">
+    <div class="crest">Legio Invicta</div>
+    <h1>Documento privado</h1>
+    <p>Proyección confidencial · acceso restringido</p>
+    <input id="pw" type="password" placeholder="contraseña" autocomplete="off" autofocus>
+    <button onclick="unlock()">Entrar</button>
+    <div class="err" id="err"></div>
+  </div>
+</div>
+
+<main id="app">
+  <header class="masthead">
+    <div class="rule-deco">San Cosme · Ciudad de México</div>
+    <h1>Proyección de Ventas</h1>
+    <div class="sub">Panadería &amp; Rostícería — Edificio Altamirano</div>
+    <div class="meta">Modelo de ingresos · Estimación mensual · 2026</div>
+  </header>
+
+  <div class="hero">
+    <div class="cell">
+      <div class="k">Panadería</div>
+      <div class="v">$2,536,500</div>
+      <div class="u">al mes · $84,550 / día</div>
+    </div>
+    <div class="cell">
+      <div class="k">Rostícería</div>
+      <div class="v">$454,974</div>
+      <div class="u">al mes · $15,166 / día</div>
+    </div>
+    <div class="cell total">
+      <div class="k">Venta total</div>
+      <div class="v">$3,000,000</div>
+      <div class="u">al mes (estimado)</div>
+    </div>
+  </div>
+
+  <!-- PANADERÍA -->
+  <section class="unit">
+    <div class="unit-head">
+      <h2>Panadería</h2>
+      <span class="badge">$84,550 / día</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Línea</th><th>Supuesto</th><th class="num">$ / día</th></tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="3" class="cat">Pan francés</td></tr>
+        <tr><td class="line">Bolillo (mostrador)</td><td>1 bulto · 800 pz × $3</td><td class="num">2,400</td></tr>
+        <tr><td class="line">Bolillo (restaurante)</td><td>1 bulto · 800 pz</td><td class="num">2,200</td></tr>
+        <tr><td class="line">Especialidad pan blanco</td><td>baguette, casa · ~1,000 pz</td><td class="num">4,000</td></tr>
+        <tr><td class="line">Restaurante de nivel</td><td>panes especiales</td><td class="num">5,000</td></tr>
+        <tr class="sub"><td class="line" colspan="2">Subtotal pan francés</td><td class="num">12,000</td></tr>
+
+        <tr><td colspan="3" class="cat">Bizcochería</td></tr>
+        <tr><td class="line">Bizcochos</td><td>2,000 pz × $12</td><td class="num">24,000</td></tr>
+        <tr><td class="line">Bizcocho especial</td><td>300 pz × $20</td><td class="num">6,000</td></tr>
+        <tr><td class="line">Cafeterías</td><td>500 pz · pan dulce surtido</td><td class="num">5,000</td></tr>
+        <tr class="sub"><td class="line" colspan="2">Subtotal bizcochería</td><td class="num">35,000</td></tr>
+
+        <tr><td colspan="3" class="cat">Repostería</td></tr>
+        <tr><td class="line">Pan industrial</td><td>comprado / reventa</td><td class="num">5,400</td></tr>
+        <tr><td class="line">Pasteles</td><td>~85 pasteles + diversos</td><td class="num">5,400</td></tr>
+        <tr><td class="line">Gelatinas</td><td>50% de pasteles vendidos</td><td class="num">2,600</td></tr>
+        <tr><td class="line">Postres</td><td>50% del total de gelatinas</td><td class="num">2,600</td></tr>
+
+        <tr><td colspan="3" class="cat">Salados, helados y bebidas</td></tr>
+        <tr><td class="line">Bocadillos gourmet</td><td>75 diarios × $60</td><td class="num">4,500</td></tr>
+        <tr><td class="line">Ensaladas</td><td>50 × $80</td><td class="num">4,000</td></tr>
+        <tr><td class="line">Helados</td><td>40 × $40</td><td class="num">1,600</td></tr>
+        <tr><td class="line">Café y especialidades</td><td>mesas $2,500 + calle $1,000 + llevar $1,750</td><td class="num">5,250</td></tr>
+        <tr><td class="line">Otras bebidas</td><td>refrescos y jugos</td><td class="num">1,000</td></tr>
+        <tr><td class="line">Panqués y piezas</td><td>8 paquetes × $200</td><td class="num">1,600</td></tr>
+
+        <tr class="grand"><td colspan="2">Panadería · por día</td><td class="num">$84,550</td></tr>
+        <tr class="grand"><td colspan="2">Panadería · por mes (×30)</td><td class="num">$2,536,500</td></tr>
+      </tbody>
+    </table>
+    <div class="narr">
+      El motor es el <b>pan</b>: bolillo de mostrador y de reparto a restaurantes, especialidades de pan blanco y línea fina para restaurantes de nivel. Alrededor gira la <b>bizcochería</b> —el volumen más fuerte— y una capa de <b>repostería, salados, helados y bebidas</b> que aprovecha el flujo de gente en las mesas y el mostrador.
+    </div>
+  </section>
+
+  <!-- ROSTICERÍA -->
+  <section class="unit">
+    <div class="unit-head">
+      <h2>Rostícería</h2>
+      <span class="badge">$15,166 / día</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Concepto</th><th>Supuesto</th><th class="num">Valor</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="line">Volumen</td><td>50 pollos entre semana + 200 sáb + 200 dom</td><td class="num">650 / sem</td></tr>
+        <tr><td class="line">Mensual</td><td>≈ 650 × 4.5 semanas</td><td class="num">~3,000 pollos</td></tr>
+        <tr><td class="line">Margen unitario</td><td>costo $67.20 × 1.20</td><td class="num">$80.64 / pollo</td></tr>
+        <tr><td class="line">Venta de pollos</td><td>con especialidades</td><td class="num">$11,666 / día</td></tr>
+        <tr><td class="line">Complementos</td><td>un tercio adicional</td><td class="num">$3,499 / día</td></tr>
+        <tr class="grand"><td colspan="2">Rostícería · por día</td><td class="num">$15,166</td></tr>
+        <tr class="grand"><td colspan="2">Rostícería · por mes (×30)</td><td class="num">$454,974</td></tr>
+      </tbody>
+    </table>
+    <div class="narr">
+      Segunda unidad con centro propio: el <b>pollo rostizado</b> como producto ancla, reforzado con marranitos, complementos y guarniciones que suman un tercio adicional de venta.
+    </div>
+  </section>
+
+  <footer class="foot">
+    Legio Invicta · Demiurgo Design
+    <div class="disc">Cifras estimadas, modelo de trabajo sujeto a ajuste. Documento confidencial de uso interno.</div>
+  </footer>
+</main>
+
+<button class="print-btn" onclick="window.print()">Imprimir / PDF</button>
+
+<script>
+/* Gate client-side. NO es seguridad real — solo disuasión. Cambiar PASS para rotar. */
+const PASS = "sancosme2026";
+function unlock(){
+  const v = document.getElementById('pw').value.trim();
+  if(v === PASS){
+    sessionStorage.setItem('pv_ok','1');
+    show();
+  } else {
+    document.getElementById('err').textContent = 'Contraseña incorrecta';
+    document.getElementById('pw').value='';
+  }
+}
+function show(){
+  document.getElementById('gate').style.display='none';
+  document.getElementById('app').style.display='block';
+}
+document.getElementById('pw').addEventListener('keydown',e=>{ if(e.key==='Enter') unlock(); });
+if(sessionStorage.getItem('pv_ok')==='1'){ show(); }
+</script>
+</body>
+</html>
