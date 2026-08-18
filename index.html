@@ -13,6 +13,8 @@
     - 202608172210 Lumi — v3: recupera ~$3M quitando redondeos a la baja (pan francés $13,600,
       cafeterías $6,000). Panadería $83,650/día = $2,509,500/mes; total $2,964,474 (≈$3M).
       Notas sin atribución nominal.
+    - 202608172250 Lumi — v4: sube jerarquía del "≈3 millones" en el hero y agrega banner de
+      cierre al final (cifra real exacta $2,964,474 en grande + "≈ 3 millones" subordinado).
 -->
 <html lang="es">
 <head>
@@ -73,6 +75,16 @@ header.masthead .meta{margin-top:22px;font-size:14px;letter-spacing:3px;text-tra
 .hero .cell.total .v{color:#fff;font-size:48px}
 .hero .u{font-size:15px;letter-spacing:.5px;color:var(--muted);margin-top:4px}
 .hero .cell.total .u{color:var(--gold-soft)}
+.hero .cell.total .u.big{font-size:28px;font-weight:700;letter-spacing:1px;margin-top:8px;color:#fff}
+
+/* closing total banner */
+.closing{margin-top:60px;background:var(--burgundy);color:var(--cream);text-align:center;padding:52px 30px;border:1px solid var(--burgundy-dark)}
+.closing .k{font-size:15px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-soft)}
+.closing .real{font-family:var(--serif);font-weight:700;font-size:84px;line-height:1.02;color:#fff;margin-top:14px;letter-spacing:1px}
+.closing .approx{font-family:var(--serif);font-style:italic;font-size:40px;font-weight:600;color:var(--gold-soft);margin-top:10px}
+.closing .u{font-size:16px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-soft);margin-top:14px}
+@media(max-width:660px){ .closing .real{font-size:52px} .closing .approx{font-size:28px} }
+@media print{ .closing{background:#fff;color:var(--burgundy);-webkit-print-color-adjust:exact} .closing .real{color:var(--burgundy)} .closing .approx,.closing .k,.closing .u{color:var(--muted)} }
 
 section.unit{margin-top:56px}
 .unit-head{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--burgundy);padding-bottom:10px;margin-bottom:4px}
@@ -163,8 +175,9 @@ footer.foot .disc{text-transform:none;letter-spacing:0;font-style:italic;font-si
     </div>
     <div class="cell total">
       <div class="k">Venta total</div>
-      <div class="v">≈ $3,000,000</div>
-      <div class="u">al mes · $2,964,474 exacto</div>
+      <div class="v">$2,964,474</div>
+      <div class="u">al mes</div>
+      <div class="u big">≈ $3,000,000</div>
     </div>
   </div>
 
@@ -240,6 +253,14 @@ footer.foot .disc{text-transform:none;letter-spacing:0;font-style:italic;font-si
       Segunda unidad con centro propio: el <b>pollo rostizado</b> como producto ancla, reforzado con marranitos, complementos y guarniciones que suman un tercio adicional de venta.
     </div>
   </section>
+
+  <!-- CIERRE -->
+  <div class="closing">
+    <div class="k">Venta total estimada · al mes</div>
+    <div class="real">$2,964,474</div>
+    <div class="approx">≈ $3,000,000</div>
+    <div class="u">Panadería $2,509,500 + Rostícería $454,974</div>
+  </div>
 
   <!-- NOTAS -->
   <section class="notas">
